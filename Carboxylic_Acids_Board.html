@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carboxylic Acids Board</title>
+<style>
+:root{--o:#f28c00;--g:#2e9d5b;--b:#2b6cb0;--p:#6a4c93;--r:#e4572e;--bg:#fff8ee;--ink:#1f2a44}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(120deg,#f28c00,#e4572e 60%,#6a4c93);color:#fff;padding:16px 18px;text-align:center}
+header h1{margin:0;font-size:1.6rem}header p{margin:4px 0 0;font-size:.88rem;opacity:.95}
+nav{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:9px;background:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 6px #0002}
+nav button,.btn{border:0;border-radius:20px;padding:9px 15px;font-weight:700;cursor:pointer;background:#eee;color:var(--ink);font-size:.92rem}
+nav button.on{background:var(--o);color:#fff}.btn{background:var(--b);color:#fff}.btn:hover{filter:brightness(1.1)}
+main{max-width:920px;margin:auto;padding:12px}.tab{display:none}.tab.on{display:block}
+.card{background:#fff;border-radius:14px;padding:14px 16px;margin:12px 0;box-shadow:0 2px 8px #0001;border-left:6px solid var(--o)}
+.card h2{margin:0 0 8px;font-size:1.15rem}.hint{border-color:var(--g);background:#e9f8ef}.key{border-color:var(--r);background:#fdece6}.ext{border-color:var(--p);background:#f1ebf9}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.pill{border-radius:20px;padding:5px 12px;font-weight:700;color:#fff;display:inline-block}
+.acid{color:var(--o)}.met{color:var(--b)}.salt{color:var(--g)}.gas{color:var(--p)}.wat{color:#667}
+.eq{font-size:1.12rem;font-weight:600;background:#fffaf0;border:2px dashed #f4c27a;border-radius:10px;padding:10px;margin:8px 0;line-height:1.9}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #e6d9c6;padding:6px 8px;text-align:center}th{background:#fde9c9}
+.grid{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;max-width:420px;margin:8px 0}
+.m{aspect-ratio:1;border-radius:50%;background:#f28c00;transition:.6s}.sp{background:linear-gradient(90deg,#2b6cb0 46%,transparent 46% 54%,#2e9d5b 54%);transform:scale(1.15)}
+.ph{height:26px;border-radius:13px;background:linear-gradient(90deg,#e4572e,#f28c00,#f2d600,#2e9d5b,#2b6cb0,#6a4c93);position:relative;margin:30px 0 34px}
+.ph i{position:absolute;top:-24px;transform:translateX(-50%);font-style:normal;font-size:.72rem;font-weight:700;white-space:nowrap}
+.ph b{position:absolute;top:-4px;height:34px;border:3px solid #1f2a44;border-radius:8px;background:#fff3}
+.lit{height:34px;width:170px;border-radius:4px;background:#3b6fd8;transition:background 1.6s;margin:6px 0}.lit.red{background:#e0322f}
+.opt{display:block;width:100%;text-align:left;margin:5px 0;padding:9px 12px;border:2px solid #ddd;border-radius:10px;background:#fff;cursor:pointer;font-size:.95rem}
+.opt.ok{background:#d9f3e3;border-color:var(--g)}.opt.no{background:#fde0d8;border-color:var(--r)}
+.rev{background:#eef6ff;border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;border:2px dashed #9cc3ee}
+.rev div{display:none;margin-top:6px}.rev.show div{display:block}
+footer{text-align:center;padding:16px;font-size:.8rem;color:#666}
+</style></head><body>
+<header><p>Prepared by Teacher Aasia Khawar</p><h1>🧪 Carboxylic Acids Board</h1><p>Pearson Edexcel IGCSE Chemistry (4CH1) · Organic Chemistry</p></header>
+<nav id="nav"></nav>
+<main>
+<section class="tab" id="t0">
+ <div class="card hint"><h2>💡 Hint</h2>In an exam, a <b>displayed formula</b> must show <b>all the bonds in the –COOH group</b> (C=O and O–H). In an equation, just write it as <b>CH<sub>3</sub>COOH</b>.</div>
+ <div class="card key"><h2>🔑 Key point: naming</h2>Count <b>all</b> carbon atoms, <b>including the one in –COOH</b>. Propanoic acid has <b>3 carbons</b>, hence "prop". The –COOH is always on the end carbon, so <b>no number</b> is needed in the name.</div>
+ <div class="card"><h2>Pick an acid</h2><div class="row" id="pick"></div><div id="info"></div>
+  <div id="svgbox"></div>
+  <div class="row"><button class="btn" onclick="countC()">🔢 Count the carbons</button><button class="btn" style="background:var(--p)" onclick="toggleHL()">🟧 Show / hide –COOH group</button></div>
+  <p id="msg" style="font-weight:700"></p>
+  <div class="row"><span class="pill" style="background:#444">C carbon</span><span class="pill" style="background:#3b82f6">H hydrogen</span><span class="pill" style="background:#ef4444">O oxygen</span><span class="pill" style="background:var(--o)">–COOH carboxyl group</span></div>
+ </div>
+</section>
+
+<section class="tab" id="t1">
+ <div class="card"><h2>Weak acids: partial dissociation</h2>Ethanoic acid and the other carboxylic acids are <b>weak acids</b> with a pH of about <b>3–5</b>. Press the button and compare 75 molecules of each acid in water.
+  <div class="row"><button class="btn" onclick="dissolve()">💧 Add to water</button><button class="btn" style="background:#888" onclick="resetD()">↺ Reset</button></div>
+  <div style="display:flex;flex-wrap:wrap;gap:20px"><div><b>HCl (strong acid)</b><div class="grid" id="g1"></div></div><div><b>CH<sub>3</sub>COOH (weak acid)</b><div class="grid" id="g2"></div></div></div>
+  <div class="row"><span class="pill" style="background:var(--o)">intact acid molecule</span><span class="pill" style="background:var(--b)">H⁺</span><span class="pill" style="background:var(--g)">anion (Cl⁻ or CH<sub>3</sub>COO⁻)</span></div>
+  <p id="dmsg" style="font-weight:700"></p></div>
+ <div class="card ext"><h2>🎓 Extension: strong ≠ concentrated</h2>Strong and weak describe <b>how much an acid dissociates</b>, not its concentration. HCl dissociates completely; only about <b>1 in 75</b> CH<sub>3</sub>COOH molecules form H⁺ and CH<sub>3</sub>COO⁻. So ethanoic acid reacts <b>more slowly</b> than HCl of the same concentration: the concentration of H⁺ is much lower.</div>
+ <div class="card"><h2>The pH scale</h2><div class="ph"><i style="left:7%">HCl ≈ 1</i><b style="left:21%;width:14%"></b><i style="left:28%;top:36px">ethanoic acid pH 3–5</i><i style="left:50%">water 7</i></div>
+  <b>Blue litmus test:</b> carboxylic acids turn blue litmus red.<div class="lit" id="lit"></div><button class="btn" onclick="document.getElementById('lit').classList.toggle('red')">Dip litmus paper</button></div>
+</section>
+
+<section class="tab" id="t2">
+ <div class="card"><h2>Reactions of ethanoic acid</h2>Ethanoic acid reacts like any other acid: <b>metal → salt + hydrogen</b>, <b>carbonate → salt + CO<sub>2</sub> + water</b>. Choose a reaction:
+  <div class="row" id="rpick"></div><div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><div id="tube" style="width:170px"></div><div style="flex:1;min-width:250px"><div class="eq" id="eq"></div><div id="obs"></div></div></div>
+  <div class="row"><span class="pill" style="background:var(--o)">acid</span><span class="pill" style="background:var(--b)">metal / carbonate</span><span class="pill" style="background:var(--g)">salt</span><span class="pill" style="background:var(--p)">gas</span><span class="pill" style="background:#778">water</span></div></div>
+ <div class="card key"><h2>⚖️ Writing the salt</h2>Magnesium ethanoate is <b>ionic</b>: it contains Mg<sup>2+</sup> and CH<sub>3</sub>COO⁻. You need <b>two</b> ethanoate ions for every Mg<sup>2+</sup> to balance the charges, so it is <b>(CH<sub>3</sub>COO)<sub>2</sub>Mg</b>. The metal is written after the ethanoate.
+  <div class="row" style="align-items:center"><span class="pill" style="background:var(--g)">Mg²⁺ (2+)</span><b>+</b><span class="pill" style="background:var(--o)">CH₃COO⁻</span><b>+</b><span class="pill" style="background:var(--o)">CH₃COO⁻</span><b>= 0 overall ✔</b></div>
+  Sodium reacts dangerously; zinc gives bubbles more slowly than with hydrochloric acid; metals below hydrogen in the reactivity series do not react.</div>
+</section>
+
+<section class="tab" id="t3">
+ <div class="card"><h2>🎯 Quick quiz</h2><div id="quiz"></div><p id="score" style="font-weight:800;font-size:1.1rem"></p></div>
+ <div class="card"><h2>📘 Chapter question 1: tap to reveal answers</h2><div id="chq"></div></div>
+</section>
+</main>
+<footer>© Made by Aasia Khawar · Based on the Carboxylic Acids chapter, Organic Chemistry</footer>
+<script>
+const $=id=>document.getElementById(id);
+const f=s=>s.replace(/([A-Za-z)])(\d+)/g,'$1<sub>$2</sub>').replace(/\^(\d*[+\u2212])/g,'<sup>$1</sup>');
+const tabs=['🔬 Name & Draw','🧫 Weak Acid','⚗️ Reactions','🎯 Quiz'];
+tabs.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>show(i);$('nav').appendChild(b)});
+function show(i){document.querySelectorAll('.tab').forEach((e,k)=>e.classList.toggle('on',k==i));[...$('nav').children].forEach((e,k)=>e.classList.toggle('on',k==i))}
+show(0);
+/* ---- drawing ---- */
+const A=[['methanoic acid','CH2O2','HCOOH',1,'meth'],['ethanoic acid','C2H4O2','CH3COOH',2,'eth'],['propanoic acid','C3H6O2','CH3CH2COOH',3,'prop'],['butanoic acid','C4H8O2','CH3CH2CH2COOH',4,'but']];
+const cC='#444',cH='#3b82f6',cO='#ef4444';let cur=1,hl=true;
+function draw(n,hl){const s=60,x0=60,y=110,xc=x0+(n-1)*s,W=xc+140;let L='',B='';
+ const ln=(a,b,c,d)=>L+=`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="#3b4256" stroke-width="3.5" stroke-linecap="round"/>`;
+ const at=(x,yy,t,c,r,cl='')=>B+=`<g class="${cl}"><circle cx="${x}" cy="${yy}" r="${r}" fill="${c}"/><text x="${x}" y="${yy+5}" text-anchor="middle" font-size="${r>14?18:14}" font-weight="700" fill="#fff">${t}</text></g>`;
+ for(let i=0;i<n-1;i++){const x=x0+i*s;ln(x,y,x+s,y);ln(x,y,x,y-50);ln(x,y,x,y+50);at(x,y-50,'H',cH,12);at(x,y+50,'H',cH,12);if(!i){ln(x,y,x-48,y);at(x-48,y,'H',cH,12)}at(x,y,'C',cC,17,'c')}
+ if(n==1){ln(xc,y,xc-48,y);at(xc-48,y,'H',cH,12)}
+ ln(xc-3,y,xc-3,y-52);ln(xc+3,y,xc+3,y-52);ln(xc,y,xc+38,y+34);ln(xc+38,y+34,xc+82,y+34);
+ at(xc,y-52,'O',cO,15);at(xc+38,y+34,'O',cO,15);at(xc+82,y+34,'H',cH,12);at(xc,y,'C',cC,17,'c');
+ const r=hl?`<rect x="${xc-34}" y="${y-86}" width="150" height="132" rx="16" fill="#f28c00" fill-opacity=".18" stroke="#f28c00" stroke-width="3" stroke-dasharray="7 5"/>`:'';
+ return `<svg id="sv" viewBox="0 0 ${W} 210" style="width:100%;max-width:${W*1.6}px">${r}${L}${B}</svg>`}
+function pickAcid(i){cur=i;const a=A[i];[...$('pick').children].forEach((b,k)=>b.style.outline=k==i?'3px solid #1f2a44':'none');
+ $('info').innerHTML=`<table><tr><th>Name</th><th>Molecular</th><th>Structural</th></tr><tr><td><b>${a[0]}</b></td><td>${f(a[1])}</td><td><b>${f(a[2])}</b></td></tr></table>`;
+ $('svgbox').innerHTML=draw(a[3],hl);$('msg').innerHTML=''}
+const cols=['#e4572e','#f28c00','#2e9d5b','#2b6cb0'];
+A.forEach((a,i)=>{const b=document.createElement('button');b.className='btn';b.style.background=cols[i];b.textContent=a[0];b.onclick=()=>pickAcid(i);$('pick').appendChild(b)});
+function toggleHL(){hl=!hl;pickAcid(cur)}
+function countC(){pickAcid(cur);const a=A[cur],cs=[...document.querySelectorAll('#sv .c')].reverse();
+ cs.forEach((g,k)=>setTimeout(()=>{g.querySelector('circle').setAttribute('fill','#f28c00');g.querySelector('text').textContent=k+1;
+  if(k==cs.length-1)$('msg').innerHTML=`${a[3]} carbon${a[3]>1?'s':''} (counting the one in –COOH) → prefix "<span style="color:var(--r)">${a[4]}</span>" → <span style="color:var(--g)">${a[0]}</span>`},k*600))}
+pickAcid(1);
+/* ---- dissociation ---- */
+function resetD(){['g1','g2'].forEach(id=>{$(id).innerHTML='';for(let i=0;i<75;i++){const d=document.createElement('div');d.className='m';$(id).appendChild(d)}});$('dmsg').innerHTML=''}
+function dissolve(){resetD();[...$('g1').children].forEach((d,i)=>setTimeout(()=>d.classList.add('sp'),i*25));
+ const k=Math.floor(Math.random()*75);setTimeout(()=>$('g2').children[k].classList.add('sp'),900);
+ setTimeout(()=>$('dmsg').innerHTML='HCl: <span style="color:var(--b)">75 / 75</span> split into ions (strong). CH₃COOH: about <span style="color:var(--r)">1 in 75</span> splits (weak).',2000)}
+resetD();
+/* ---- reactions ---- */
+const R=[{n:'Mg + ethanoic acid',seg:[['Mg(s)','met'],' + ',['2CH3COOH(aq)','acid'],' → ',['(CH3COO)2Mg(aq)','salt'],' + ',['H2(g)','gas']],o:['Magnesium fizzes and disappears (more slowly than with HCl)','Colourless solution of <b>magnesium ethanoate</b>','Gas test: <b>H₂ gives a squeaky pop</b> with a lit splint'],nb:14,sp:1,s:'m'},
+{n:'Zn + ethanoic acid',seg:[['Zn(s)','met'],' + ',['2CH3COOH(aq)','acid'],' → ',['(CH3COO)2Zn(aq)','salt'],' + ',['H2(g)','gas']],o:['Slow bubbles of hydrogen (slower than zinc with HCl)','Colourless solution of <b>zinc ethanoate</b>','Gas test: <b>squeaky pop</b>'],nb:6,sp:.6,s:'m'},
+{n:'Na₂CO₃ + ethanoic acid',seg:[['Na2CO3(s)','met'],' + ',['2CH3COOH(aq)','acid'],' → ',['2CH3COONa(aq)','salt'],' + ',['CO2(g)','gas'],' + ',['H2O(l)','wat']],o:['<b>Lots of fizzing</b>; the solid dissolves','Colourless solution of <b>sodium ethanoate</b>','Gas test: <b>CO₂ turns limewater milky</b>'],nb:30,sp:1.6,s:'c'},
+{n:'CaCO₃ + ethanoic acid',seg:[['2CH3COOH(aq)','acid'],' + ',['CaCO3(s)','met'],' → ',['(CH3COO)2Ca(aq)','salt'],' + ',['CO2(g)','gas'],' + ',['H2O(l)','wat']],o:['<b>Lots of fizzing</b> as the carbonate dissolves','Colourless solution of <b>calcium ethanoate</b>','Gas test: <b>CO₂ turns limewater milky</b>'],nb:24,sp:1.3,s:'c'}];
+function tube(r){let b='';for(let i=0;i<r.nb;i++){const x=68+Math.random()*52,d=(1.5+Math.random()*1.5)/r.sp,dl=Math.random()*3;
+ b+=`<circle cx="${x}" r="${3+Math.random()*4}" fill="#fff" fill-opacity=".8" stroke="#7b5ea7" stroke-width="1.5"><animate attributeName="cy" from="205" to="85" dur="${d}s" begin="${dl}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" dur="${d}s" begin="${dl}s" repeatCount="indefinite"/></circle>`}
+ const sol=r.s=='m'?'<rect x="86" y="150" width="16" height="62" rx="3" fill="#9aa3ad" transform="rotate(12 94 180)"/>':'<circle cx="80" cy="212" r="9" fill="#f4f4f4" stroke="#999"/><circle cx="100" cy="214" r="8" fill="#f4f4f4" stroke="#999"/><circle cx="90" cy="203" r="7" fill="#f4f4f4" stroke="#999"/>';
+ return `<svg viewBox="0 0 190 260" style="width:100%"><path d="M57 80V215a38 38 0 0 0 76 0V80Z" fill="#d9ecff"/>${sol}${b}<path d="M55 30V215a40 40 0 0 0 80 0V30" fill="none" stroke="#445" stroke-width="4"/><line x1="48" y1="30" x2="142" y2="30" stroke="#445" stroke-width="4"/></svg>`}
+function pickR(i){const r=R[i];[...$('rpick').children].forEach((b,k)=>b.style.outline=k==i?'3px solid #1f2a44':'none');
+ $('eq').innerHTML=r.seg.map(p=>typeof p=='string'?p:`<span class="${p[1]}">${f(p[0])}</span>`).join('');
+ $('obs').innerHTML='<ul>'+r.o.map(x=>`<li>${x}</li>`).join('')+'</ul>';$('tube').innerHTML=tube(r)}
+R.forEach((r,i)=>{const b=document.createElement('button');b.className='btn';b.style.background=['#2b6cb0','#6a4c93','#2e9d5b','#e4572e'][i];b.innerHTML=r.n;b.onclick=()=>pickR(i);$('rpick').appendChild(b)});pickR(0);
+/* ---- quiz ---- */
+const Q=[['Name CH3CH2CH2COOH.',['propanoic acid','butanoic acid','butanol','pentanoic acid'],1,'4 carbons including the –COOH carbon → but + anoic acid.'],
+['CH3COOH is the formula of…',['methanoic acid','ethanoic acid','propanoic acid','ethanol'],1,'2 carbons in total → ethanoic acid.'],
+['Which is the structural formula of butanoic acid?',['CH3CH2COOH','CH3CH2CH2COOH','HCOOH','CH3COOH'],1,'But = 4 carbons: CH3–CH2–CH2–COOH.'],
+['How many carbon atoms are in a molecule of propanoic acid?',['2','3','4','1'],1,'Count the carbon in –COOH too: "prop" = 3.'],
+['Which gas forms when magnesium reacts with ethanoic acid?',['oxygen','hydrogen','carbon dioxide','no gas'],1,'Metal + acid → salt + hydrogen.'],
+['What is formed when ethanoic acid reacts with calcium carbonate?',['calcium ethanoate, CO2 and water','calcium chloride and hydrogen','calcium oxide only','CH3COOCa'],0,'Carbonate + acid → salt + carbon dioxide + water. The salt is (CH3COO)2Ca.'],
+['Why does ethanoic acid react more slowly with metals than HCl of the same concentration?',['It is a weak acid: lower concentration of H⁺','It contains carbon','It is a base','It is a solid'],0,'Only about 1 in 75 molecules dissociate, so [H⁺] is much lower.'],
+['What is the approximate pH of a carboxylic acid solution?',['0–1','3–5','7','12–14'],1,'Weak acids have a pH of about 3–5.']];
+let sc=0,dn=0;
+Q.forEach((q,i)=>{const d=document.createElement('div');d.innerHTML=`<p><b>${i+1}. ${f(q[0])}</b></p>`;
+ q[1].forEach((o,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=f(o);b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;dn++;
+  const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('ok');if(k==q[2])sc++;else b.classList.add('no');
+  const e=document.createElement('p');e.innerHTML='💡 '+f(q[3]);d.appendChild(e);if(dn==Q.length)$('score').innerHTML=`Score: ${sc} / ${Q.length} ${sc==Q.length?'🏆 Brilliant!':sc>5?'⭐ Great work!':'Keep practising!'}`};d.appendChild(b)});
+ $('quiz').appendChild(d)});
+const C=[['a (i) Draw the structural formula of ethanoic acid','<b>CH₃COOH</b>'],['a (ii) Draw the structural formula of butanoic acid','<b>CH₃CH₂CH₂COOH</b>'],['b (i) Displayed formula of methanoic acid',draw(1,true)],['b (ii) Displayed formula of propanoic acid',draw(3,true)],['c (i) Name CH₃CH₂CH₂COOH','<b>butanoic acid</b>'],['c (ii) Name CH₃COOH','<b>ethanoic acid</b>']];
+C.forEach(c=>{const d=document.createElement('div');d.className='rev';d.innerHTML=`${c[0]}<div>${c[1]}</div>`;d.onclick=()=>d.classList.toggle('show');$('chq').appendChild(d)});
+</script></body></html>
